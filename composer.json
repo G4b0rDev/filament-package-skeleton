@@ -1,0 +1,62 @@
+{
+    "name": "{{ VENDOR_NAME }}/{{ PACKAGE_NAME }}",
+    "description": "{{ PACKAGE_DESCRIPTION }}",
+    "type": "library",
+    "version": "0.0.1",
+    "keywords": [
+        "{{ VENDOR_NAME }}",
+        "{{ PACKAGE_NAME }}"
+    ],
+    "homepage": "https://github.com/{{ VENDOR_NAME }}/{{ PACKAGE_NAME }}",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "{{ AUTHOR_NAME }}",
+            "email": "{{ AUTHOR_EMAIL }}",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.3",
+        "filament/filament": "*",
+        "spatie/laravel-package-tools": "^1.16",
+        "tightenco/duster": "^3.0.3",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "{{ NAMESPACE }}\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "{{ NAMESPACE }}\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage-html ./coverage",
+        "fix": "vendor/bin/duster fix"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "{{ NAMESPACE }}\\{{ PACKAGE_NAME }}ServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

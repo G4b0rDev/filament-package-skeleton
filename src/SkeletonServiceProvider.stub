@@ -1,0 +1,45 @@
+<?php
+
+namespace {{ NAMESPACE }};
+
+{{ if hasCss }}
+use Filament\Support\Assets\Css;
+{{ endif }}
+{{ if hasJs }}
+use Filament\Support\Assets\Js;
+{{ endif }}
+{{ if hasAssets}}
+use Filament\Support\Facades\FilamentAsset;
+{{ endif }}
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
+
+class {{ CLASS }}ServiceProvider extends PackageServiceProvider
+{
+    public function configurePackage(Package $package): void
+    {
+        $package
+            ->name('{{ PACKAGE_NAME }}')
+            {{ if hasAssets }}
+            ->hasAssets()
+            {{ endif }}
+            {{ if hasViews }}
+            ->hasViews()
+            {{ endif }}
+            ;
+    }
+
+    {{ if hasAssets }}
+    public function packageBooted(): void
+    {
+        FilamentAsset::register([
+            {{ if hasCss }}
+            Css::make('{{ CSS_ASSET }}-style', __DIR__ . '/../dist/{{ CSS_ASSET }}.css')->loadedOnRequest(),
+            {{ endif }}
+            {{ if hasJs }}
+            Js::make('{{ JS_ASSET }}-script', __DIR__ . '/../dist/{{ JS_ASSET }}.js')->loadedOnRequest(),
+            {{ endif}}
+        ], '{{ FILAMENT_PLUGIN_ID }}');
+    }
+    {{ endif }}
+}

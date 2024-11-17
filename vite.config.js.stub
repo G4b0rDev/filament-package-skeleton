@@ -1,0 +1,31 @@
+import { defineConfig } from 'vite';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
+export default defineConfig({
+    css: {
+        postcss: {
+            plugins: [
+                tailwindcss(),
+                autoprefixer(),
+            ],
+        },
+    },
+    build: {
+        rollupOptions: {
+            {{ if hasJavascript }}
+            input: 'resources/js/{{ JAVASCRIPT }}.js',
+            {{ endif }}
+            output: {
+                {{ if hasJavascript }}
+                entryFileNames: '{{ JAVASCRIPT }}.js',
+                chunkFileNames: '{{ JAVASCRIPT }}.js',
+                {{ endif }}
+                assetFileNames: '{{ STYLESHEET }}.css',
+                dir: 'dist',
+            },
+        },
+        outDir: 'dist',
+        minify: 'terser',
+    },
+});
